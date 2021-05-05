@@ -16,19 +16,11 @@ public abstract class Pessoa {
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 
-		if (!isCpfOnList(cpf)) {
+		if (cpfsCadastrados.contains(cpf)) {
+			throw new CpfRepetidoException();
+		} else {
 			this.cpf = cpf;
 			Pessoa.cpfsCadastrados.add(cpf);
 		}
-	}
-
-	private static boolean isCpfOnList(String cpf) throws CpfRepetidoException {
-		for (int i = 0; i < cpfsCadastrados.size(); i++) {
-			if (cpfsCadastrados.get(i).equals(cpf)) {
-				throw new CpfRepetidoException();
-			}
-		}
-
-		return false;
 	}
 }
