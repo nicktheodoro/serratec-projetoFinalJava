@@ -2,9 +2,10 @@ package org.serratec.entidades;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.ArrayList;
 
 import org.serratec.excecoes.CpfRepetidoException;
+
+import java.util.ArrayList;
 
 public abstract class Pessoa {
 	protected String nome;

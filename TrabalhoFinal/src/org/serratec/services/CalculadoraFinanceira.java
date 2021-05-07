@@ -1,27 +1,28 @@
 package org.serratec.services;
 
+import java.util.List;
+
 import org.serratec.entidades.Dependente;
-import org.serratec.entidades.InterfaceCalculos;
 
-public abstract class Calculos implements InterfaceCalculos {
+public class CalculadoraFinanceira {
+	private double salarioBruto;
+	private double descontoInss;
+	private double descontoIR;
+	List<Dependente> dependentes;
+	private double deducaoDependentes;
 
-	protected double salarioBruto;
-	protected double descontoInss;
-	protected double descontoIR;
-	protected double salarioLiquido;
-	protected Dependente[] dependentes;
-	protected double deducaoDependentes;
+	public double calculaSalarioLiquido(double salarioBruto, List<Dependente> dependentes) {
+		this.salarioBruto = salarioBruto;
+		this.dependentes = dependentes;
 
-	@Override
-	public double calculaSalarioLiquido() {
-		System.out.println(this.descontoInss);
-		System.out.println(this.deducaoDependentes);
-		System.out.println(this.descontoIR);
-		return this.salarioLiquido = this.salarioBruto - this.descontoInss - this.descontoIR;
+		calculaDescontoInss();
+		calculaDeducaoDependentes();
+		calculaDescontoIR();
+
+		return (this.salarioBruto - this.descontoInss - this.descontoIR);
 	}
-	
-	@Override
-	public double calculaDescontoInss() {
+
+	private double calculaDescontoInss() {
 		if (this.salarioBruto <= 1100) {
 			return descontoInss = this.salarioBruto * 7.5 / 100;
 		} else if (this.salarioBruto <= 2203.48) {
@@ -35,13 +36,11 @@ public abstract class Calculos implements InterfaceCalculos {
 		}
 	}
 
-	@Override
-	public double calculaDeducaoDependentes() {
-		return this.deducaoDependentes = this.dependentes.length * 189.59;
+	private double calculaDeducaoDependentes() {
+		return this.deducaoDependentes = this.dependentes.size() * 189.59;
 	}
 
-	@Override
-	public double calculaDescontoIR() {
+	private double calculaDescontoIR() {
 		double descontoIR = this.salarioBruto - this.deducaoDependentes - this.descontoInss;
 
 		if (descontoIR <= 1903.98) {
@@ -57,8 +56,11 @@ public abstract class Calculos implements InterfaceCalculos {
 		}
 	}
 
-	@Override
-	public double getSalarioLiquido() {
-		return salarioLiquido;
+	public double getDescontoInss() {
+		return descontoInss;
+	}
+
+	public double getDescontoIR() {
+		return descontoIR;
 	}
 }

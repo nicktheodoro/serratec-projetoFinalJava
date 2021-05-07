@@ -1,33 +1,45 @@
 package org.serratec.entidades;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+
+import org.serratec.services.CalculadoraFinanceira;
+import org.serratec.excecoes.CpfRepetidoException;
 import java.util.List;
 
-import org.serratec.services.Calculos;
+public class Funcionario extends Pessoa {
+	private double salarioBruto;
+	private List<Dependente> dependentes;
+	CalculadoraFinanceira calculadora = new CalculadoraFinanceira();
+	private double salarioLiquido;
+	private double descontoInss;
+	private double descontoIr;
 
-public class Funcionario extends Calculos {
-	protected String nome;
-	protected String cpf;
-	protected LocalDate dataNascimento;
-	protected static List<String> cpfsCadastrados = new ArrayList<String>();
-	
 	public Funcionario(String nome, String cpf, LocalDate dataNascimento, double salarioBruto,
-			Dependente[] dependentes){
-		
+			List<Dependente> dependentes) throws CpfRepetidoException {
+		super(nome, cpf, dataNascimento);
 		this.salarioBruto = salarioBruto;
 		this.dependentes = dependentes;
+
+		this.salarioLiquido = calculadora.calculaSalarioLiquido(this.salarioBruto, this.dependentes);
+		this.descontoInss = calculadora.getDescontoInss();
+		this.descontoIr = calculadora.getDescontoIR();
 	}
 
-	public Funcionario(double salarioBruto, double descontoInss, double descontoIR, double salarioLiquido,
-			Dependente[] dependentes, double deducaoDependentes) {
-		this.salarioBruto = salarioBruto;
-		this.descontoInss = descontoInss;
-		this.descontoIR = descontoIR;
-		this.salarioLiquido = salarioLiquido;
-		this.dependentes = dependentes;
-		this.deducaoDependentes = deducaoDependentes;
+	public double getSalarioLiquido() {
+		return salarioLiquido;
 	}
 
-	
+	public double getDescontoInss() {
+		return descontoInss;
+	}
+
+	public double getDescontoIr() {
+		return descontoIr;
+	}
+
+	@Override
+	public String toString() {
+		return "<" + nome + "><" + cpf + "><" + String.format("%.2f", descontoInss) + "><"
+				+ String.format("%.2f", descontoIr) + "><" + String.format("%.2f", salarioLiquido) + ">";
+	}
 }
