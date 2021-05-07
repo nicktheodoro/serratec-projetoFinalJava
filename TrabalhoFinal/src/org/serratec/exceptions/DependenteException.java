@@ -1,4 +1,4 @@
-package org.serratec.excecoes;
+package org.serratec.exceptions;
 
 public class DependenteException extends Exception {
 	/**

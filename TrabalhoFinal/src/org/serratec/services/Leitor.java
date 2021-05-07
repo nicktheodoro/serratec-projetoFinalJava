@@ -1,6 +1,7 @@
 package org.serratec.services;
 
 import java.io.BufferedReader;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,17 +9,22 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.serratec.entidades.Dependente;
-import org.serratec.entidades.Funcionario;
 import org.serratec.enums.TipoParentesco;
-import org.serratec.excecoes.CpfRepetidoException;
-import org.serratec.excecoes.DependenteException;
+import org.serratec.exceptions.CpfRepetidoException;
+import org.serratec.exceptions.DependenteException;
+import org.serratec.models.Dependente;
+import org.serratec.models.Funcionario;
+
 
 public class Leitor {
 	private String caminhoArquivo;
 	private FileReader arquivo;
 	private static BufferedReader lerArquivo;
 	private List<Funcionario> funcionarios;
+	private final String filho = "FILHO";
+	private final String sobrinho = "SOBRINHO";
+	private final String outros = "OUTROS";
+	
 
 	public Leitor(String caminhoArquivo) {
 		this.caminhoArquivo = caminhoArquivo;
@@ -64,9 +70,12 @@ public class Leitor {
 
 		for (String linha = Leitor.lerArquivo.readLine(); linha != null; linha = Leitor.lerArquivo.readLine()) {
 			String[] campo;
-			int ano, mes, dia;
+			
+			int ano;
+			int mes;
+			int dia;
 
-			if (linha.equals("")) {
+			if (linha.isEmpty()) {
 				funcionarios.add(funcionario);
 				dependentesDeFuncionario = new ArrayList<Dependente>();
 				continue;
@@ -78,20 +87,20 @@ public class Leitor {
 			dia = Integer.parseInt(campo[2].substring(6, 8));
 
 			switch (campo[3]) {
-			case "FILHO":
+			case filho:
 				tipo = TipoParentesco.FILHO;
 				break;
-			case "SOBRINHO":
+			case sobrinho:
 				tipo = TipoParentesco.SOBRINHO;
 				break;
-			case "OUTROS":
+			case outros:
 				tipo = TipoParentesco.OUTROS;
 				break;
 			default:
 				break;
 			}
 
-			if (!(campo[3].equals("FILHO") || campo[3].equals("SOBRINHO") || campo[3].equals("OUTROS"))) {
+			if (!(campo[3].equals(filho) || campo[3].equals(sobrinho) || campo[3].equals(outros))) {
 				funcionario = new Funcionario(campo[0], campo[1], LocalDate.of(ano, mes, dia),
 						Double.parseDouble(campo[3]), dependentesDeFuncionario);
 			} else {

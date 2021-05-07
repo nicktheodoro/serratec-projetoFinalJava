@@ -2,7 +2,7 @@ package org.serratec.services;
 
 import java.util.List;
 
-import org.serratec.entidades.Dependente;
+import org.serratec.models.Dependente;
 
 public class CalculadoraFinanceira {
 	private double salarioBruto;
@@ -67,6 +67,5 @@ public class CalculadoraFinanceira {
 	public double getDeducaoDependentes() {
 		return deducaoDependentes;
 	}
-	
 	
 }

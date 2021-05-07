@@ -1,9 +1,9 @@
-package org.serratec.entidades;
+package org.serratec.models;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import org.serratec.excecoes.CpfRepetidoException;
+import org.serratec.exceptions.CpfRepetidoException;
 
 import java.util.ArrayList;
 

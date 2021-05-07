@@ -1,10 +1,10 @@
-package org.serratec.entidades;
+package org.serratec.models;
 
 import java.time.LocalDate;
 
 import org.serratec.enums.TipoParentesco;
-import org.serratec.excecoes.CpfRepetidoException;
-import org.serratec.excecoes.DependenteException;
+import org.serratec.exceptions.CpfRepetidoException;
+import org.serratec.exceptions.DependenteException;
 
 public class Dependente extends Pessoa {
 	private TipoParentesco parentesco;

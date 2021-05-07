@@ -1,9 +1,10 @@
-package org.serratec.entidades;
+package org.serratec.models;
 
 import java.time.LocalDate;
 
+import org.serratec.exceptions.CpfRepetidoException;
 import org.serratec.services.CalculadoraFinanceira;
-import org.serratec.excecoes.CpfRepetidoException;
+
 import java.util.List;
 
 public class Funcionario extends Pessoa {
