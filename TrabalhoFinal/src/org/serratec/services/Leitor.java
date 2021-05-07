@@ -1,7 +1,6 @@
 package org.serratec.services;
 
 import java.io.BufferedReader;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,7 +13,6 @@ import org.serratec.exceptions.CpfRepetidoException;
 import org.serratec.exceptions.DependenteException;
 import org.serratec.models.Dependente;
 import org.serratec.models.Funcionario;
-
 
 public class Leitor {
 	private String caminhoArquivo;
