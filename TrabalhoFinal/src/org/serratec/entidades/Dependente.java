@@ -38,4 +38,8 @@ public class Dependente extends Pessoa {
 	private boolean isDependentOverEighteenYearsOld(LocalDate dataNascimento) {
 		return this.defineIdade(dataNascimento) > 18;
 	}
+
+	public TipoParentesco getParentesco() {
+		return parentesco;
+	}
 }
