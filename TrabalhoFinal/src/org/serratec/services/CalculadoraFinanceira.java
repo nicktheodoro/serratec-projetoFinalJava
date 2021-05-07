@@ -14,7 +14,7 @@ public class CalculadoraFinanceira {
 	public double calculaSalarioLiquido(double salarioBruto, List<Dependente> dependentes) {
 		this.salarioBruto = salarioBruto;
 		this.dependentes = dependentes;
-
+	
 		calculaDescontoInss();
 		calculaDeducaoDependentes();
 		calculaDescontoIR();
@@ -37,7 +37,7 @@ public class CalculadoraFinanceira {
 	}
 
 	private double calculaDeducaoDependentes() {
-		return this.deducaoDependentes = this.dependentes.size() * 189.59;
+		return this.deducaoDependentes = dependentes.size() * 189.59;
 	}
 
 	private double calculaDescontoIR() {
@@ -63,4 +63,10 @@ public class CalculadoraFinanceira {
 	public double getDescontoIR() {
 		return descontoIR;
 	}
+
+	public double getDeducaoDependentes() {
+		return deducaoDependentes;
+	}
+	
+	
 }

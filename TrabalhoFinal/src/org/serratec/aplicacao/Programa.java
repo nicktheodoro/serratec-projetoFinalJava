@@ -9,6 +9,7 @@ public class Programa {
 		Leitor leitura = new Leitor(caminhoArquivo);
 
 		for (Funcionario funcionario : leitura.getFuncionarios()) {
+			funcionario.calcularSalarioLiquido();
 			System.out.println(funcionario);
 		}
 	}
