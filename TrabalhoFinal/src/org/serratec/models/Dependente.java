@@ -14,7 +14,7 @@ public class Dependente extends Pessoa {
 		super(nome, cpf, dataNascimento);
 		this.parentesco = parentesco;
 		
-		if(isDependentOverEighteenYearsOld(dataNascimento)) {
+		if(isDependenteMaiorDezoito(dataNascimento)) {
 			throw new DependenteException();
 		}
 	}
@@ -30,12 +30,11 @@ public class Dependente extends Pessoa {
 				&& hoje.getDayOfMonth() < dataNascimento.getDayOfMonth()) {
 					idade--;
 			}
-		}
-		
+		}	
 		return idade;
 	}
 	
-	private boolean isDependentOverEighteenYearsOld(LocalDate dataNascimento) {
+	private boolean isDependenteMaiorDezoito(LocalDate dataNascimento) {
 		return this.defineIdade(dataNascimento) > 18;
 	}
 

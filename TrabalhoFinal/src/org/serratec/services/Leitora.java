@@ -14,7 +14,7 @@ import org.serratec.exceptions.DependenteException;
 import org.serratec.models.Dependente;
 import org.serratec.models.Funcionario;
 
-public class Leitor {
+public class Leitora {
 	private String caminhoArquivo;
 	private FileReader arquivo;
 	private static BufferedReader lerArquivo;
@@ -23,18 +23,17 @@ public class Leitor {
 	private final String sobrinho = "SOBRINHO";
 	private final String outros = "OUTROS";
 	
-
-	public Leitor(String caminhoArquivo) {
+	public Leitora(String caminhoArquivo) {
 		this.caminhoArquivo = caminhoArquivo;
 
 		try {
 			this.arquivo = new FileReader(this.caminhoArquivo);
-			Leitor.lerArquivo = new BufferedReader(this.arquivo);
+			Leitora.lerArquivo = new BufferedReader(this.arquivo);
 
 			this.funcionarios = lerCsv();
 
 			this.arquivo.close();
-			Leitor.lerArquivo.close();
+			Leitora.lerArquivo.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("O arquivo informado não foi encontrado.");
 			e.getMessage();
@@ -66,7 +65,7 @@ public class Leitor {
 		Dependente dependente = null;
 		TipoParentesco tipo = null;
 
-		for (String linha = Leitor.lerArquivo.readLine(); linha != null; linha = Leitor.lerArquivo.readLine()) {
+		for (String linha = Leitora.lerArquivo.readLine(); linha != null; linha = Leitora.lerArquivo.readLine()) {
 			String[] campo;
 			
 			int ano;
