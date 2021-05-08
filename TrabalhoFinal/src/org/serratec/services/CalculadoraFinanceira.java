@@ -2,15 +2,17 @@ package org.serratec.services;
 
 import java.util.List;
 
+import org.serratec.interfaces.ICalculadoraFinanceira;
 import org.serratec.models.Dependente;
 
-public class CalculadoraFinanceira {
+public class CalculadoraFinanceira implements ICalculadoraFinanceira {
 	private double salarioBruto;
 	private double descontoInss;
 	private double descontoIR;
 	List<Dependente> dependentes;
 	private double deducaoDependentes;
-
+	
+	
 	public double calculaSalarioLiquido(double salarioBruto, List<Dependente> dependentes) {
 		this.salarioBruto = salarioBruto;
 		this.dependentes = dependentes;
@@ -21,8 +23,9 @@ public class CalculadoraFinanceira {
 
 		return (this.salarioBruto - this.descontoInss - this.descontoIR);
 	}
-
-	private double calculaDescontoInss() {
+	
+	@Override
+	public double calculaDescontoInss() {
 		if (this.salarioBruto <= 1100) {
 			return descontoInss = this.salarioBruto * 7.5 / 100;
 		} else if (this.salarioBruto <= 2203.48) {
@@ -36,11 +39,13 @@ public class CalculadoraFinanceira {
 		}
 	}
 
-	private double calculaDeducaoDependentes() {
+	@Override
+	public double calculaDeducaoDependentes() {
 		return this.deducaoDependentes = dependentes.size() * 189.59;
 	}
 
-	private double calculaDescontoIR() {
+	@Override
+	public double calculaDescontoIR() {
 		double descontoIR = this.salarioBruto - this.deducaoDependentes - this.descontoInss;
 
 		if (descontoIR <= 1903.98) {

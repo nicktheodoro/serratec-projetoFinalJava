@@ -11,10 +11,11 @@ import java.util.List;
 import org.serratec.enums.TipoParentesco;
 import org.serratec.exceptions.CpfRepetidoException;
 import org.serratec.exceptions.DependenteException;
+import org.serratec.interfaces.ILeitora;
 import org.serratec.models.Dependente;
 import org.serratec.models.Funcionario;
 
-public class Leitora {
+public class Leitora implements ILeitora {
 	private String caminhoArquivo;
 	private FileReader arquivo;
 	private static BufferedReader lerArquivo;
@@ -22,6 +23,7 @@ public class Leitora {
 	private final String filho = "FILHO";
 	private final String sobrinho = "SOBRINHO";
 	private final String outros = "OUTROS";
+	
 	
 	public Leitora(String caminhoArquivo) {
 		this.caminhoArquivo = caminhoArquivo;
@@ -56,7 +58,8 @@ public class Leitora {
 		return funcionarios;
 	}
 
-	private List<Funcionario> lerCsv()
+	@Override
+	public List<Funcionario> lerCsv()
 			throws IOException, NumberFormatException, CpfRepetidoException, DependenteException {
 		List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 
@@ -106,7 +109,6 @@ public class Leitora {
 			}
 		}
 
-		// adiciona último funcionario à lista de funcionarios
 		funcionarios.add(funcionario);
 
 		return funcionarios;

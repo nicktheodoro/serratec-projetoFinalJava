@@ -24,4 +24,18 @@ public abstract class Pessoa {
 			Pessoa.cpfsCadastrados.add(cpf);
 		}
 	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+	
+	
 }
