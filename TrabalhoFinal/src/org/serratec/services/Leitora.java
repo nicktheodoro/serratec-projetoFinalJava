@@ -15,27 +15,32 @@ import org.serratec.interfaces.ILeitora;
 import org.serratec.models.Dependente;
 import org.serratec.models.Funcionario;
 
-public class Leitora implements ILeitora {
-	private String caminhoArquivo;
-	private FileReader arquivo;
-	private static BufferedReader lerArquivo;
-	private List<Funcionario> funcionarios;
+public class Leitora implements ILeitora, AutoCloseable {
+
 	private final String filho = "FILHO";
 	private final String sobrinho = "SOBRINHO";
 	private final String outros = "OUTROS";
-	
-	
+
+	private String caminhoArquivo;
+	private FileReader arquivo;
+	private BufferedReader lerArquivo;
+	private List<Funcionario> funcionarios;
+	private TipoParentesco tipo = null;
+
 	public Leitora(String caminhoArquivo) {
 		this.caminhoArquivo = caminhoArquivo;
+		this.iniciarLeitora();
+	}
 
+	public void iniciarLeitora() {
 		try {
 			this.arquivo = new FileReader(this.caminhoArquivo);
-			Leitora.lerArquivo = new BufferedReader(this.arquivo);
+			this.lerArquivo = new BufferedReader(this.arquivo);
 
 			this.funcionarios = lerCsv();
 
 			this.arquivo.close();
-			Leitora.lerArquivo.close();
+			this.lerArquivo.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("O arquivo informado não foi encontrado.");
 			e.getMessage();
@@ -58,22 +63,15 @@ public class Leitora implements ILeitora {
 		return funcionarios;
 	}
 
-	@Override
 	public List<Funcionario> lerCsv()
 			throws IOException, NumberFormatException, CpfRepetidoException, DependenteException {
 		List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 
 		List<Dependente> dependentesDeFuncionario = new ArrayList<Dependente>();
 		Funcionario funcionario = null;
-		Dependente dependente = null;
-		TipoParentesco tipo = null;
 
-		for (String linha = Leitora.lerArquivo.readLine(); linha != null; linha = Leitora.lerArquivo.readLine()) {
+		for (String linha = this.lerArquivo.readLine(); linha != null; linha = this.lerArquivo.readLine()) {
 			String[] campo;
-			
-			int ano;
-			int mes;
-			int dia;
 
 			if (linha.isEmpty()) {
 				funcionarios.add(funcionario);
@@ -82,35 +80,57 @@ public class Leitora implements ILeitora {
 			}
 
 			campo = linha.split(";");
-			ano = Integer.parseInt(campo[2].substring(0, 4));
-			mes = Integer.parseInt(campo[2].substring(4, 6));
-			dia = Integer.parseInt(campo[2].substring(6, 8));
 
-			switch (campo[3]) {
-			case filho:
-				tipo = TipoParentesco.FILHO;
-				break;
-			case sobrinho:
-				tipo = TipoParentesco.SOBRINHO;
-				break;
-			case outros:
-				tipo = TipoParentesco.OUTROS;
-				break;
-			default:
-				break;
-			}
+			this.obterParentesco(campo[3]);
 
-			if (!(campo[3].equals(filho) || campo[3].equals(sobrinho) || campo[3].equals(outros))) {
-				funcionario = new Funcionario(campo[0], campo[1], LocalDate.of(ano, mes, dia),
+			if (this.isFuncionario(campo)) {
+				funcionario = new Funcionario(campo[0], campo[1], this.obterDataNascimento(campo[2]),
 						Double.parseDouble(campo[3]), dependentesDeFuncionario);
 			} else {
-				dependente = new Dependente(campo[0], campo[1], LocalDate.of(ano, mes, dia), tipo);
-				dependentesDeFuncionario.add(dependente);
+				dependentesDeFuncionario
+						.add(new Dependente(campo[0], campo[1], this.obterDataNascimento(campo[2]), tipo));
 			}
 		}
 
 		funcionarios.add(funcionario);
 
 		return funcionarios;
+	}
+
+	private boolean isFuncionario(String[] campo) {
+		return !(campo[3].equals(filho) || campo[3].equals(sobrinho) || campo[3].equals(outros));
+	}
+
+	private LocalDate obterDataNascimento(String campo) {
+		int ano = Integer.parseInt(campo.substring(0, 4));
+		int mes = Integer.parseInt(campo.substring(4, 6));
+		int dia = Integer.parseInt(campo.substring(6, 8));
+
+		return LocalDate.of(ano, mes, dia);
+	}
+
+	private void obterParentesco(String campo) {
+		switch (campo) {
+		case filho:
+			tipo = TipoParentesco.FILHO;
+			break;
+		case sobrinho:
+			tipo = TipoParentesco.SOBRINHO;
+			break;
+		case outros:
+			tipo = TipoParentesco.OUTROS;
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public void close() {
+		try {
+			this.lerArquivo.close();
+		} catch (IOException e) {
+			System.out.println("Falha ao fechar leitora");
+		}
 	}
 }

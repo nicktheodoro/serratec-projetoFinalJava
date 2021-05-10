@@ -8,9 +8,9 @@ import org.serratec.services.CalculadoraFinanceira;
 import java.util.List;
 
 public class Funcionario extends Pessoa {
-	private double salarioBruto;
-	private List<Dependente> dependentes;
 	CalculadoraFinanceira calculadora = new CalculadoraFinanceira();
+	private List<Dependente> dependentes;
+	private double salarioBruto;
 	private double salarioLiquido;
 	private double descontoInss;
 	private double descontoIr;
@@ -42,7 +42,7 @@ public class Funcionario extends Pessoa {
 
 	@Override
     public String toString() {
-        return nome + ";" + cpf + ";" + String.format("%.2f", descontoInss) + ";"
-                + String.format("%.2f", descontoIr) + ";" + String.format("%.2f", salarioLiquido);
+        return this.nome + ";" + this.cpf + ";" + String.format("%.2f", this.descontoInss) + ";"
+                + String.format("%.2f", this.descontoIr) + ";" + String.format("%.2f", this.salarioLiquido);
     }
 }
