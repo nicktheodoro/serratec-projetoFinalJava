@@ -75,6 +75,7 @@ public class Leitora implements ILeitora, AutoCloseable {
 
 			if (linha.isEmpty()) {
 				funcionarios.add(funcionario);
+				funcionario = null;
 				dependentesDeFuncionario = new ArrayList<Dependente>();
 				continue;
 			}
@@ -92,7 +93,9 @@ public class Leitora implements ILeitora, AutoCloseable {
 			}
 		}
 
-		funcionarios.add(funcionario);
+		if(funcionario != null) {
+			funcionarios.add(funcionario);
+		}
 
 		return funcionarios;
 	}

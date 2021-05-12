@@ -17,7 +17,7 @@ public abstract class Pessoa {
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 
-		if (Pessoa.cpfsCadastrados.contains(cpf)) {
+		if (cpfsCadastrados.contains(cpf)) {
 			throw new CpfRepetidoException();
 		} else {
 			this.cpf = cpf;

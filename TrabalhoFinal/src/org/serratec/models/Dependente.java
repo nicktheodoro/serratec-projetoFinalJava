@@ -18,6 +18,7 @@ public class Dependente extends Pessoa {
 		if (this.isDependenteMaiorDezoito(dataNascimento)) {
 			throw new DependenteException();
 		}
+
 	}
 
 	private int definirIdade(LocalDate dataNascimento) {

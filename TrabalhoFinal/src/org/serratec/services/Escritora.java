@@ -4,8 +4,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 import org.serratec.interfaces.IEscritora;
 import org.serratec.models.Funcionario;
@@ -34,17 +32,11 @@ public class Escritora implements IEscritora, AutoCloseable {
 			System.out.println("Falha ao escrever arquivo.");
 		}
 	}
-	
-	private void gerarCsv(Funcionario funcionario) throws IOException {
-		String[] atributos;
-		List<String> linha;
 
+	private void gerarCsv(Funcionario funcionario) throws IOException {
 		funcionario.calcularFinancas();
 
-		atributos = funcionario.toString().split(";");
-		linha = Arrays.asList(atributos[0], atributos[1], atributos[2], atributos[3], atributos[4]);
-
-		this.csvBWriter.append(String.join(";", linha));
+		this.csvBWriter.append(funcionario.toString());
 		this.csvBWriter.append("\n");
 	}
 
