@@ -12,18 +12,18 @@ public class CalculadoraFinanceira extends DadosAliquota implements ICalculadora
 	private List<Dependente> dependentes;
 	private double deducaoDependentes;
 
-	public double calculaSalarioLiquido(double salarioBruto, List<Dependente> dependentes) {
+	public double calcularSalarioLiquido(double salarioBruto, List<Dependente> dependentes) {
 		this.salarioBruto = salarioBruto;
 		this.dependentes = dependentes;
 
-		this.calculaDescontoInss();
-		this.calculaDeducaoDependentes();
-		this.calculaDescontoIR();
+		this.calcularDescontoInss();
+		this.calcularDeducaoDependentes();
+		this.calcularDescontoIR();
 
 		return (this.salarioBruto - this.descontoInss - this.descontoIR);
 	}
 
-	public double calculaDescontoInss() {
+	public double calcularDescontoInss() {
 		if (this.salarioBruto <= ALIQUOTA_INSS_ISENTO) {
 			return descontoInss = this.salarioBruto * 7.5 / 100;
 		} else if (this.salarioBruto <= ALIQUOTA_INSS_TAXA_1) {
@@ -37,7 +37,7 @@ public class CalculadoraFinanceira extends DadosAliquota implements ICalculadora
 		}
 	}
 
-	public double calculaDescontoIR() {
+	public double calcularDescontoIR() {
 		double descontoIR = this.salarioBruto - this.deducaoDependentes - this.descontoInss;
 
 		if (descontoIR <= ALIQUOTA_IR_ISENTO) {
@@ -53,7 +53,7 @@ public class CalculadoraFinanceira extends DadosAliquota implements ICalculadora
 		}
 	}
 
-	public double calculaDeducaoDependentes() {
+	public double calcularDeducaoDependentes() {
 		return this.deducaoDependentes = this.dependentes.size() * 189.59;
 	}
 

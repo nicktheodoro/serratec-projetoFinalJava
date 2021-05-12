@@ -1,6 +1,7 @@
 package org.serratec.models;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 import org.serratec.enums.TipoParentesco;
 import org.serratec.exceptions.CpfRepetidoException;
@@ -13,29 +14,20 @@ public class Dependente extends Pessoa {
 			throws CpfRepetidoException, DependenteException {
 		super(nome, cpf, dataNascimento);
 		this.parentesco = parentesco;
-		
-		if(isDependenteMaiorDezoito(dataNascimento)) {
+
+		if (this.isDependenteMaiorDezoito(dataNascimento)) {
 			throw new DependenteException();
 		}
 	}
-	
-	private int defineIdade(LocalDate dataNascimento) {
+
+	private int definirIdade(LocalDate dataNascimento) {
 		LocalDate hoje = LocalDate.now();
-		int idade = hoje.getYear() - dataNascimento.getYear();
-		
-		if(hoje.getMonthValue() < dataNascimento.getMonthValue()) {
-			idade--;
-		} else {
-			if(hoje.getMonthValue() == dataNascimento.getMonthValue()
-				&& hoje.getDayOfMonth() < dataNascimento.getDayOfMonth()) {
-					idade--;
-			}
-		}	
-		return idade;
+
+		return Period.between(dataNascimento, hoje).getYears();
 	}
-	
+
 	private boolean isDependenteMaiorDezoito(LocalDate dataNascimento) {
-		return this.defineIdade(dataNascimento) > 18;
+		return this.definirIdade(dataNascimento) > 17;
 	}
 
 	public TipoParentesco getParentesco() {

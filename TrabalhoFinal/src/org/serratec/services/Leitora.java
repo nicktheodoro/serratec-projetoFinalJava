@@ -80,7 +80,7 @@ public class Leitora implements ILeitora, AutoCloseable {
 			}
 
 			campo = linha.split(";");
-
+			
 			this.obterParentesco(campo[3]);
 
 			if (this.isFuncionario(campo)) {

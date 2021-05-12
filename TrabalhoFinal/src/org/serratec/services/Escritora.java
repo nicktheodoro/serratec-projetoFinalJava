@@ -39,7 +39,7 @@ public class Escritora implements IEscritora, AutoCloseable {
 		String[] atributos;
 		List<String> linha;
 
-		funcionario.calcularSalarioLiquido();
+		funcionario.calcularFinancas();
 
 		atributos = funcionario.toString().split(";");
 		linha = Arrays.asList(atributos[0], atributos[1], atributos[2], atributos[3], atributos[4]);
