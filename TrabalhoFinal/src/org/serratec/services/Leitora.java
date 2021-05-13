@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.serratec.enums.TipoParentesco;
-import org.serratec.exceptions.CpfRepetidoException;
+import org.serratec.exceptions.CpfException;
 import org.serratec.exceptions.DependenteException;
 import org.serratec.interfaces.ILeitora;
 import org.serratec.models.Dependente;
@@ -48,9 +48,9 @@ public class Leitora implements ILeitora, AutoCloseable {
 			System.out.println("Formato errado de arquivo.");
 			e.getMessage();
 		} catch (NumberFormatException e) {
-			System.out.println("O formato da data est√° incorreto.");
+			System.out.println("O formato do arquivo est· incorreto");
 			e.printStackTrace();
-		} catch (CpfRepetidoException e) {
+		} catch (CpfException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		} catch (DependenteException e) {
@@ -64,7 +64,7 @@ public class Leitora implements ILeitora, AutoCloseable {
 	}
 
 	public List<Funcionario> lerCsv()
-			throws IOException, NumberFormatException, CpfRepetidoException, DependenteException {
+			throws IOException, NumberFormatException, CpfException, DependenteException {
 		List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 
 		List<Dependente> dependentesDeFuncionario = new ArrayList<Dependente>();

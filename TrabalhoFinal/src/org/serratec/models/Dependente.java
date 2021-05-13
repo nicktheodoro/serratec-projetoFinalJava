@@ -4,14 +4,14 @@ import java.time.LocalDate;
 import java.time.Period;
 
 import org.serratec.enums.TipoParentesco;
-import org.serratec.exceptions.CpfRepetidoException;
+import org.serratec.exceptions.CpfException;
 import org.serratec.exceptions.DependenteException;
 
 public class Dependente extends Pessoa {
 	private TipoParentesco parentesco;
 
 	public Dependente(String nome, String cpf, LocalDate dataNascimento, TipoParentesco parentesco)
-			throws CpfRepetidoException, DependenteException {
+			throws CpfException, DependenteException {
 		super(nome, cpf, dataNascimento);
 		this.parentesco = parentesco;
 

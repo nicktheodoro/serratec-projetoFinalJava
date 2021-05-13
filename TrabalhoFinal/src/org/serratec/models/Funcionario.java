@@ -2,7 +2,7 @@ package org.serratec.models;
 
 import java.time.LocalDate;
 
-import org.serratec.exceptions.CpfRepetidoException;
+import org.serratec.exceptions.CpfException;
 import org.serratec.services.CalculadoraFinanceira;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public class Funcionario extends Pessoa {
 	private double descontoIr;
 
 	public Funcionario(String nome, String cpf, LocalDate dataNascimento, double salarioBruto,
-			List<Dependente> dependentes) throws CpfRepetidoException {
+			List<Dependente> dependentes) throws CpfException {
 		super(nome, cpf, dataNascimento);
 		this.salarioBruto = salarioBruto;
 		this.dependentes = dependentes;

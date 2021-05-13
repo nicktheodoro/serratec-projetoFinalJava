@@ -1,7 +1,6 @@
 package org.serratec.services;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -9,20 +8,20 @@ import org.serratec.interfaces.IEscritora;
 import org.serratec.models.Funcionario;
 
 public class Escritora implements IEscritora, AutoCloseable {
-	private final String CAMINHO_DO_ARQUIVO = "files" + File.separator;
-	private final String NOME_DO_ARQUIVO_SAIDA = "saida.csv";
+	private String caminhoArquivo;
 	private Leitora entrada;
 	private FileWriter csvFWriter;
 	private BufferedWriter csvBWriter;
 
-	public Escritora(Leitora entrada) {
+	public Escritora(Leitora entrada, String CAMINHO_ARQUIVO_SAIDA) {
 		this.entrada = entrada;
+		this.caminhoArquivo = CAMINHO_ARQUIVO_SAIDA;
 	}
 
 	public void escreverCsv() {
 
 		try {
-			this.csvFWriter = new FileWriter(CAMINHO_DO_ARQUIVO + NOME_DO_ARQUIVO_SAIDA);
+			this.csvFWriter = new FileWriter(caminhoArquivo);
 			this.csvBWriter = new BufferedWriter(csvFWriter);
 
 			for (Funcionario funcionario : entrada.getFuncionarios()) {
